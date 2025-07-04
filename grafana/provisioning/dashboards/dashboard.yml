@@ -1,0 +1,23 @@
+apiVersion: 1
+
+providers:
+- name: 'Prometheus'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  editable: true
+  allowUiUpdates: true
+  options:
+    path: /etc/grafana/provisioning/dashboards
+    # Added Fastly-Security and Fastly-Thresholds dashboards
+    files:
+      - Fastly-Service.json
+      - Fastly-Top-Datacenters.json
+      - Fastly-Top-Origins.json
+      - Fastly-Top-Services.json
+      - Fastly-Security.json
+      - Fastly-Thresholds.json
+      - Fastly-Compute.json
+      - Fastly-Dashboard.json
+      - Home.json

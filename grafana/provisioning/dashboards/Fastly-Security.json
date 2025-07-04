@@ -1,0 +1,51 @@
+{
+  "id": null,
+  "uid": "fastly-security",
+  "title": "Fastly Security",
+  "tags": ["fastly", "security"],
+  "timezone": "browser",
+  "schemaVersion": 32,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "DDoS Mitigation Count",
+      "datasource": "prometheus-ds",
+      "targets": [{
+        "expr": "sum(rate(ddos_action_mitigate[120s])) by (service_id,service_name)",
+        "legendFormat": "{{service_name}} ({{service_id}})",
+        "interval": ""
+      }],
+      "fieldConfig": {"defaults": {"unit": "short"}},
+      "gridPos": {"h": 6, "w": 12, "x": 0, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Bot Challenges Failed",
+      "datasource": "prometheus-ds",
+      "targets": [{
+        "expr": "sum(rate(bot_challenges_failed[120s])) by (service_id,service_name)",
+        "legendFormat": "{{service_name}} ({{service_id}})",
+        "interval": ""
+      }],
+      "fieldConfig": {"defaults": {"unit": "short"}},
+      "gridPos": {"h": 6, "w": 12, "x": 12, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Attack Blocked Req Body Bytes",
+      "datasource": "prometheus-ds",
+      "targets": [{
+        "expr": "sum(rate(attack_blocked_req_body_bytes[120s])) by (service_id,service_name)",
+        "legendFormat": "{{service_name}} ({{service_id}})",
+        "interval": ""
+      }],
+      "fieldConfig": {"defaults": {"unit": "bytes"}},
+      "gridPos": {"h": 6, "w": 24, "x": 0, "y": 6}
+    }
+  ],
+  "templating": {"list": []},
+  "time": {"from": "now-1h", "to": "now"},
+  "timepicker": {"refresh_intervals": ["30s", "1m", "5m", "15m", "30m", "1h"]}
+}

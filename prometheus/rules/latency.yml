@@ -1,0 +1,23 @@
+groups:
+  - name: latency
+    rules:
+      # Account-level latency
+      - record: fastly_account:latency_p50_seconds
+        expr: histogram_quantile(0.5,sum(rate(fastly_rt_miss_duration_seconds_bucket[120s])) by (le))
+      - record: fastly_account:latency_p99_seconds
+        expr: histogram_quantile(0.99,sum(rate(fastly_rt_miss_duration_seconds_bucket[120s])) by (le))
+      # Datacenter-level latency
+      - record: fastly_datacenter:latency_p50_seconds
+        expr: histogram_quantile(0.5,sum(rate(fastly_rt_miss_duration_seconds_bucket[120s])) by (le,datacenter))
+      - record: fastly_datacenter:latency_p99_seconds
+        expr: histogram_quantile(0.99,sum(rate(fastly_rt_miss_duration_seconds_bucket[120s])) by (le,datacenter))
+      # Origin-level latency
+      - record: fastly_origin:latency_p50_seconds
+        expr: histogram_quantile(0.5,sum(rate(fastly_origin_latency_seconds_bucket[120s])) by (le,origin,service_id,service_name))
+      - record: fastly_origin:latency_p99_seconds
+        expr: histogram_quantile(0.99,sum(rate(fastly_origin_latency_seconds_bucket[120s])) by (le,origin,service_id,service_name))
+      # Service-level latency
+      - record: fastly_service:latency_p50_seconds
+        expr: histogram_quantile(0.5,sum(rate(fastly_rt_miss_duration_seconds_bucket[120s])) by (le,service_id,service_name))
+      - record: fastly_service:latency_p99_seconds
+        expr: histogram_quantile(0.99,sum(rate(fastly_rt_miss_duration_seconds_bucket[120s])) by (le,service_id,service_name))

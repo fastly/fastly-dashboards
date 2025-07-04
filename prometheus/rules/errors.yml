@@ -1,0 +1,55 @@
+groups:
+  - name: errors
+    rules:
+      # Account-level error ratios
+      - record: fastly_account:4xx_ratio
+        expr: |
+          sum(rate(fastly_rt_status_group_total{status_group="4xx"}[120s]))  
+          / sum(rate(fastly_rt_status_group_total[120s]))
+      - record: fastly_account:5xx_ratio
+        expr: |
+          sum(rate(fastly_rt_status_group_total{status_group="5xx"}[120s]))  
+          / sum(rate(fastly_rt_status_group_total[120s]))
+      - record: fastly_account:errors_ratio
+        expr: |
+          sum(rate(fastly_rt_errors_total[120s]))  
+          / fastly_account:requests
+      # Datacenter-level error ratios
+      - record: fastly_datacenter:4xx_ratio
+        expr: |
+          sum(rate(fastly_rt_status_group_total{status_group="4xx"}[120s])) by (datacenter) 
+          / sum(rate(fastly_rt_status_group_total[120s])) by (datacenter)
+      - record: fastly_datacenter:5xx_ratio
+        expr: |
+          sum(rate(fastly_rt_status_group_total{status_group="5xx"}[120s])) by (datacenter) 
+          / sum(rate(fastly_rt_status_group_total[120s])) by (datacenter)
+      - record: fastly_datacenter:errors_ratio
+        expr: |
+          sum(rate(fastly_rt_errors_total[120s])) by (datacenter) 
+          / fastly_datacenter:requests
+      # Origin-level error ratios
+      - record: fastly_origin:4xx_ratio
+        expr: |
+          sum(rate(fastly_origin_status_group_total{status_group="4xx"}[120s])) by (origin,service_id,service_name) 
+          / sum(rate(fastly_origin_status_group_total[120s])) by (origin,service_id,service_name)
+      - record: fastly_origin:5xx_ratio
+        expr: |
+          sum(rate(fastly_origin_status_group_total{status_group="5xx"}[120s])) by (origin,service_id,service_name) 
+          / sum(rate(fastly_origin_status_group_total[120s])) by (origin,service_id,service_name)
+      - record: fastly_origin:errors_ratio
+        expr: |
+          sum(rate(fastly_rt_errors_total[120s])) by (origin,service_id,service_name) 
+          / fastly_origin:requests
+      # Service-level error ratios
+      - record: fastly_service:4xx_ratio
+        expr: |
+          sum(rate(fastly_rt_status_group_total{status_group="4xx"}[120s])) by (service_id,service_name) 
+          / sum(rate(fastly_rt_status_group_total[120s])) by (service_id,service_name)
+      - record: fastly_service:5xx_ratio
+        expr: |
+          sum(rate(fastly_rt_status_group_total{status_group="5xx"}[120s])) by (service_id,service_name) 
+          / sum(rate(fastly_rt_status_group_total[120s])) by (service_id,service_name)
+      - record: fastly_service:errors_ratio
+        expr: |
+          sum(rate(fastly_rt_errors_total[120s])) by (service_id,service_name) 
+          / fastly_service:requests

@@ -1,0 +1,11 @@
+groups:
+  - name: test
+    rules:
+
+    - alert: fastlyDemoAlert
+      expr: fastly_account:requests > 0
+      labels:
+        job: 'fastlyAltitude'
+        severity: warning
+      annotations:
+        description: 'Working!'

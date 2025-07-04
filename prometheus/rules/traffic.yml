@@ -1,0 +1,15 @@
+groups:
+  - name: traffic
+    rules:
+      # Account-level traffic
+      - record: fastly_account:requests
+        expr: sum(rate(fastly_rt_requests_total[120s]))
+      # Datacenter-level traffic
+      - record: fastly_datacenter:requests
+        expr: sum(rate(fastly_rt_requests_total[120s])) by (datacenter)
+      # Origin-level traffic
+      - record: fastly_origin:requests
+        expr: sum(rate(fastly_origin_responses_total[120s])) by (origin,service_id,service_name)
+      # Service-level traffic
+      - record: fastly_service:requests
+        expr: sum(rate(fastly_rt_requests_total[120s])) by (service_id,service_name)

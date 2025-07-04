@@ -1,0 +1,87 @@
+groups:
+  - name: thresholds
+    rules:
+      # Account-level thresholds
+      - record: fastly_account:4xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_account:alerts_recently{alertname="fastlyAccount4xxPercent"}) 
+          or 0.05+0*fastly_account:requests
+      - record: fastly_account:5xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_account:alerts_recently{alertname="fastlyAccount5xxPercent"}) 
+          or 0.05+0*fastly_account:requests
+      - record: fastly_account:errors_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_account:alerts_recently{alertname="fastlyAccountErrorPercent"}) 
+          or 0.05+0*fastly_account:requests
+      - record: fastly_account:latency_p50_warn_seconds
+        expr: |
+          0.620+0*count(fastly_account:alerts_recently{alertname="fastlyAccountP50Latency"}) 
+          or 0.826+0*fastly_account:requests
+      - record: fastly_account:latency_p99_warn_seconds
+        expr: |
+          1.859+0*count(fastly_account:alerts_recently{alertname="fastlyAccountP99Latency"}) 
+          or 2.478+0*fastly_account:requests
+      # Datacenter-level thresholds
+      - record: fastly_datacenter:4xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_datacenter:alerts_recently{alertname="fastlyDatacenter4xxPercent"}) by (datacenter)
+          or 0.05+0*fastly_datacenter:requests
+      - record: fastly_datacenter:5xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_datacenter:alerts_recently{alertname="fastlyDatacenter5xxPercent"}) by (datacenter)
+          or 0.05+0*fastly_datacenter:requests
+      - record: fastly_datacenter:errors_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_datacenter:alerts_recently{alertname="fastlyDatacenterErrorPercent"}) by (datacenter)
+          or 0.05+0*fastly_datacenter:requests
+      - record: fastly_datacenter:latency_p50_warn_seconds
+        expr: |
+          0.620+0*count(fastly_datacenter:alerts_recently{alertname="fastlyDatacenterP50Latency"}) by (datacenter)
+          or 0.826+0*fastly_datacenter:requests
+      - record: fastly_datacenter:latency_p99_warn_seconds
+        expr: |
+          1.859+0*count(fastly_datacenter:alerts_recently{alertname="fastlyDatacenterP99Latency"}) by (datacenter)
+          or 2.478+0*fastly_datacenter:requests
+      # Origin-level thresholds
+      - record: fastly_origin:4xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_origin:alerts_recently{alertname="fastlyOrigin4xxPercent"}) by (origin,service_id,service_name)
+          or 0.05+0*fastly_origin:requests
+      - record: fastly_origin:5xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_origin:alerts_recently{alertname="fastlyOrigin5xxPercent"}) by (origin,service_id,service_name)
+          or 0.05+0*fastly_origin:requests
+      - record: fastly_origin:errors_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_origin:alerts_recently{alertname="fastlyOriginErrorPercent"}) by (origin,service_id,service_name)
+          or 0.05+0*fastly_origin:requests
+      - record: fastly_origin:latency_p50_warn_seconds
+        expr: |
+          0.620+0*count(fastly_origin:alerts_recently{alertname="fastlyOriginP50Latency"}) by (origin,service_id,service_name)
+          or 0.826+0*fastly_origin:requests
+      - record: fastly_origin:latency_p99_warn_seconds
+        expr: |
+          1.859+0*count(fastly_origin:alerts_recently{alertname="fastlyOriginP99Latency"}) by (origin,service_id,service_name)
+          or 2.478+0*fastly_origin:requests
+      # Service-level thresholds
+      - record: fastly_service:4xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_service:alerts_recently{alertname="fastlyService4xxPercent"}) by (service_id,service_name)
+          or 0.05+0*fastly_service:requests
+      - record: fastly_service:5xx_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_service:alerts_recently{alertname="fastlyService5xxPercent"}) by (service_id,service_name)
+          or 0.05+0*fastly_service:requests
+      - record: fastly_service:errors_warn_ratio
+        expr: |
+          0.0375+0*count(fastly_service:alerts_recently{alertname="fastlyServiceErrorPercent"}) by (service_id,service_name)
+          or 0.05+0*fastly_service:requests
+      - record: fastly_service:latency_p50_warn_seconds
+        expr: |
+          0.620+0*count(fastly_service:alerts_recently{alertname="fastlyServiceP50Latency"}) by (service_id,service_name)
+          or 0.826+0*fastly_service:requests
+      - record: fastly_service:latency_p99_warn_seconds
+        expr: |
+          1.859+0*count(fastly_service:alerts_recently{alertname="fastlyServiceP99Latency"}) by (service_id,service_name)
+          or 2.478+0*fastly_service:requests

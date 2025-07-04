@@ -1,0 +1,12 @@
+groups:
+  - name: security
+    rules:
+      # DDoS mitigation
+      - record: fastly_service:ddos_mitigation_count
+        expr: sum(rate(ddos_action_mitigate[120s])) by (service_id,service_name)
+      # Bot challenges (example, extend as needed)
+      - record: fastly_service:bot_challenges_failed
+        expr: sum(rate(bot_challenges_failed[120s])) by (service_id,service_name)
+      # Attack events (example, extend as needed)
+      - record: fastly_service:attack_blocked_req_body_bytes
+        expr: sum(rate(attack_blocked_req_body_bytes[120s])) by (service_id,service_name)

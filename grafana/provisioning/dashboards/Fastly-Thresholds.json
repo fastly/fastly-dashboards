@@ -1,0 +1,55 @@
+{
+  "id": null,
+  "uid": "fastly-thresholds",
+  "title": "Fastly Thresholds & Health",
+  "tags": ["fastly", "thresholds", "health"],
+  "timezone": "browser",
+  "schemaVersion": 32,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Account 4xx Warn Ratio",
+      "datasource": "prometheus-ds",
+      "targets": [{"expr": "fastly_account:4xx_warn_ratio", "legendFormat": "4xx Warn Ratio", "interval": ""}],
+      "fieldConfig": {"defaults": {"unit": "percent"}},
+      "gridPos": {"h": 4, "w": 8, "x": 0, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Account 5xx Warn Ratio",
+      "datasource": "prometheus-ds",
+      "targets": [{"expr": "fastly_account:5xx_warn_ratio", "legendFormat": "5xx Warn Ratio", "interval": ""}],
+      "fieldConfig": {"defaults": {"unit": "percent"}},
+      "gridPos": {"h": 4, "w": 8, "x": 8, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Account Errors Warn Ratio",
+      "datasource": "prometheus-ds",
+      "targets": [{"expr": "fastly_account:errors_warn_ratio", "legendFormat": "Errors Warn Ratio", "interval": ""}],
+      "fieldConfig": {"defaults": {"unit": "percent"}},
+      "gridPos": {"h": 4, "w": 8, "x": 16, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Account Latency P50 Warn (s)",
+      "datasource": "prometheus-ds",
+      "targets": [{"expr": "fastly_account:latency_p50_warn_seconds", "legendFormat": "P50 Latency", "interval": ""}],
+      "fieldConfig": {"defaults": {"unit": "s"}},
+      "gridPos": {"h": 4, "w": 8, "x": 0, "y": 4}
+    },
+    {
+      "type": "stat",
+      "title": "Account Latency P99 Warn (s)",
+      "datasource": "prometheus-ds",
+      "targets": [{"expr": "fastly_account:latency_p99_warn_seconds", "legendFormat": "P99 Latency", "interval": ""}],
+      "fieldConfig": {"defaults": {"unit": "s"}},
+      "gridPos": {"h": 4, "w": 8, "x": 8, "y": 4}
+    }
+  ],
+  "templating": {"list": []},
+  "time": {"from": "now-1h", "to": "now"},
+  "timepicker": {"refresh_intervals": ["30s", "1m", "5m", "15m", "30m", "1h"]}
+}

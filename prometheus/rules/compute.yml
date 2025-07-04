@@ -1,0 +1,12 @@
+groups:
+  - name: compute
+    rules:
+      # Compute requests
+      - record: fastly_service:compute_requests
+        expr: sum(rate(compute_requests[120s])) by (service_id,service_name)
+      # Compute errors
+      - record: fastly_service:compute_errors
+        expr: sum(rate(compute_guest_errors[120s])) by (service_id,service_name)
+      # Compute resource limits exceeded
+      - record: fastly_service:compute_resource_limit_exceeded
+        expr: sum(rate(compute_resource_limit_exceeded[120s])) by (service_id,service_name)

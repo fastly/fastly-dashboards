@@ -1,0 +1,16 @@
+groups:
+  - name: cache
+    rules:
+      # Service-level cache metrics
+      - record: fastly_service:cache_hit_ratio
+        expr: sum(rate(all_edge_hit_requests[120s])) by (service_id,service_name) / sum(rate(edge_requests[120s])) by (service_id,service_name)
+      - record: fastly_service:cache_miss_ratio
+        expr: sum(rate(all_edge_miss_requests[120s])) by (service_id,service_name) / sum(rate(edge_requests[120s])) by (service_id,service_name)
+      # Service-level edge error ratio
+      - record: fastly_service:edge_error_ratio
+        expr: sum(rate(all_error_requests[120s])) by (service_id,service_name) / sum(rate(edge_requests[120s])) by (service_id,service_name)
+      # Datacenter-level cache metrics (if available)
+      # - record: fastly_datacenter:cache_hit_ratio
+      #   expr: ...
+      # - record: fastly_datacenter:cache_miss_ratio
+      #   expr: ...
