@@ -69,7 +69,7 @@ This project uses the following containerized services:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/mrnetops/fastly-dashboards.git
+   git clone https://github.com/fastly/fastly-dashboards.git
    cd fastly-dashboards
    ```
 
