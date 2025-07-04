@@ -26,7 +26,6 @@ The following Grafana dashboards are provisioned automatically:
 - **Top Datacenters**: A breakdown of traffic by Fastly datacenter.
 - **Top Origins**: A summary of your most active origin servers.
 
-
 ## Alerting
 
 The stack includes a set of pre-configured Prometheus alerting rules that are sent to Alertmanager and can be routed to Slack. The rules cover the following categories:
@@ -110,30 +109,31 @@ Login is disabled, and you will be granted anonymous admin access.
 
 ## Troubleshooting
 
-### `no configuration file provided: not found`
+1. **`no configuration file provided: not found`**
 
-This can happen if you are using Docker Snap, which requires that all files Docker needs access to live within your `$HOME` folder. Try running the project from a directory inside your home folder.
+   This can happen if you are using Docker Snap, which requires that all files Docker needs access to live within your `$HOME` folder. Try running the project from a directory inside your home folder.
 
-### Graphs are broken and my system is dying!
+2. **Graphs are broken and my system is dying!**
 
-Processing Fastly metrics can be resource-intensive, especially with many services. To reduce the load, you can configure the `fastly-exporter` to sample a fraction of your services using the `FASTLY_EXPORTER_OPTIONS` environment variable.
+   Processing Fastly metrics can be resource-intensive, especially with many services. To reduce the load, you can configure the `fastly-exporter` to sample a fraction of your services using the `FASTLY_EXPORTER_OPTIONS` environment variable.
 
-For example, to process metrics for 1/10th of your services:
+   For example, to process metrics for 1/10th of your services:
 
-```bash
-export FASTLY_EXPORTER_OPTIONS="-service-shard 1/10"
-docker compose up
-```
+   ```bash
+   export FASTLY_EXPORTER_OPTIONS="-service-shard 1/10"
+   docker compose up
+   ```
 
-### No Slack Alerts
+3. **No Slack Alerts**
 
-If you see an error like `channel \"#NO_SLACK_CONFIG_CHANNEL\": unexpected status code 404: 404 page not found`, it means your Slack integration is not configured correctly.
+   If you see an error like `channel \"#NO_SLACK_CONFIG_CHANNEL\": unexpected status code 404: 404 page not found`, it means your Slack integration is not configured correctly.
 
-Ensure that the `$SLACK_API_URL` and `$SLACK_CONFIG_CHANNEL` environment variables are exported correctly before starting the stack.
+   Ensure that the `$SLACK_API_URL` and `$SLACK_CONFIG_CHANNEL` environment variables are exported correctly before starting the stack.
 
 ---
 
 ## Credit
+
 The official dashboards were inspired by the original [fastly-dashboards] project by [@mrnetops]. Their work was featured in the [Magic tricks with Docker (or how to monitor Fastly in about five minutes)][altitude-2020-video] presentation at Fastly Altitude 2020.
 
 [![Magic tricks with Docker (or how to monitor Fastly in about five minutes)](/images/Fastly-Altitude-2020.jpeg)][altitude-2020-video]
