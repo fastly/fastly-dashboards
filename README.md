@@ -132,16 +132,50 @@ Login is disabled, and you will be granted anonymous admin access.
 
 ---
 
+## Integrating with Existing Monitoring
+
+If you already have an existing monitoring stack, you can integrate the configurations from this repository.
+
+### Prometheus
+
+1. **Scrape Configuration**: Add the `fastly-exporter` job to your `prometheus.yml`:
+
+    ```yaml
+    - job_name: "fastly-exporter"
+      static_configs:
+        - targets: ["fastly-exporter:8080"]
+    ```
+
+    Ensure the `fastly-exporter` container is reachable by your Prometheus instance.
+
+2. **Alerting Rules**: Copy the rule files from the [`prometheus/rules/`](prometheus/rules/) directory to your Prometheus rules directory and update your `prometheus.yml` to load them:
+
+    ```yaml
+    rule_files:
+      - "/path/to/your/rules/*.yml"
+    ```
+
+### Alertmanager
+
+1. **Configuration**: Add the `slack-notifications` receiver from [`alertmanager/alertmanager.yml`](alertmanager/alertmanager.yml) to your Alertmanager configuration. You will also need to add the corresponding route.
+
+2. **Templates**: Copy the template files from [`alertmanager/templates/`](alertmanager/templates/) to your Alertmanager templates directory.
+
+### Grafana
+
+1. **Dashboards**: Copy the dashboard JSON files from the [`grafana/provisioning/dashboards/`](grafana/provisioning/dashboards/) directory to your Grafana dashboards directory.
+
+2. **Provisioning**: Configure Grafana to provision the dashboards. You can use the [`grafana/provisioning/dashboards/dashboard.yml`](grafana/provisioning/dashboards/dashboard.yml) as a reference.
+
+3. **Datasource**: Ensure you have a Prometheus datasource configured in Grafana.
+
 ## Credit
 
 The official dashboards were inspired by the original [fastly-dashboards] project by [@mrnetops]. Their work was featured in the [Magic tricks with Docker (or how to monitor Fastly in about five minutes)][altitude-2020-video] presentation at Fastly Altitude 2020.
 
-[![Magic tricks with Docker (or how to monitor Fastly in about five minutes)](/images/Fastly-Altitude-2020.jpeg)][altitude-2020-video]
-
 [fastly-dashboards]: https://github.com/mrnetops/fastly-dashboards#
 [compose]: https://github.com/docker/compose
 [fastly-exporter]: https://github.com/peterbourgon/fastly-exporter
-[fastly]: https://www.fastly.com
 [fastly-token]: https://docs.fastly.com/en/guides/finding-and-managing-your-api-token
 [prom]: https://prometheus.io
 [grafana]: https://grafana.com
