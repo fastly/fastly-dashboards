@@ -1,30 +1,29 @@
-# Fastly Dashboards
+# Fastly Dashboards for Prometheus and Grafana
 
 A comprehensive, out-of-the-box monitoring and alerting solution for Fastly services.
 
-This repository contains a [Docker Compose][compose] setup that deploys a full monitoring stack, including: [Prometheus Fastly exporter][fastly-exporter], [Prometheus][prom], [Alertmanager][alertmanager], and [Grafana][grafana]. It comes pre-loaded with a suite of dashboards and alerting rules, with built-in [Slack][slack] integration.
+This repository contains a [Docker Compose][compose] setup that deploys a full monitoring stack, including: [Prometheus Fastly Exporter][fastly-exporter], [Prometheus][prometheus], [Alertmanager][alertmanager], and [Grafana][grafana]. It comes pre-loaded with a suite of dashboards and alerting rules, with built-in [Slack][slack] integration.
 
 ## Features
 
-- **Turnkey Setup**: Launch a complete Fastly monitoring stack with a single command.
-- **Comprehensive Dashboards**: Visualize real-time and historical metrics with a rich set of pre-built Grafana dashboards.
-- **Extensive Alerting**: Over 70 pre-configured Prometheus alerts to proactively monitor service health, performance, and security.
-- **Slack Integration**: Receive timely alerts directly in your Slack workspace.
-- **Customizable**: Easily extend the dashboards and alerting rules to fit your specific needs.
+- **Turnkey Setup:** Launch a complete Fastly monitoring stack with a single command
+- **Comprehensive Dashboards:** Visualize real-time and historical metrics with a rich set of pre-built Grafana dashboards
+- **Extensive Alerting:** Over 70 pre-configured Prometheus alerts to proactively monitor service health, performance, and security
+- **Slack Integration:** Receive timely alerts directly in your Slack workspace
+- **Customizable:** Easily extend the dashboards and alerting rules to fit your specific needs
 
 ## Dashboards
 
 The following Grafana dashboards are provisioned automatically:
 
-- **Home**: A landing page with links to all other dashboards.
-- **Fastly Dashboard**: A high-level overview of all Fastly services.
-- **Fastly Service**: A detailed view of a single Fastly service.
-- **Fastly Compute**: Metrics for your Fastly Compute services.
-- **Fastly Security**: Security-related metrics, including WAF and TLS data.
-- **Fastly Thresholds**: A view for monitoring against defined thresholds.
-- **Top Services**: A summary of your most active services.
-- **Top Datacenters**: A breakdown of traffic by Fastly datacenter.
-- **Top Origins**: A summary of your most active origin servers.
+- **Fastly Dashboard:** High-level overview of all Fastly services
+- **Fastly Service:** Detailed view of a single Fastly service
+- **Fastly Compute:** Metrics for your Fastly Compute services
+- **Fastly Security:** Security-related metrics, including WAF and TLS data
+- **Fastly Thresholds:** Monitor against defined thresholds
+- **Top Services:** Summary of your most active services
+- **Top Datacenters:** A breakdown of your traffic by Fastly datacenter
+- **Top Origins:** A summary of your most active origin servers
 
 ## Alerting
 
@@ -91,16 +90,6 @@ docker compose up -d
 
 It may take a few minutes for all services to start and for data to be collected.
 
-### Running with containerd & nerdctl
-
-If you are using `nerdctl`, you may need to work around the lack of support for environment variable interpolation.
-
-```bash
-env > .env
-nerdctl run envsubst
-nerdctl compose up
-```
-
 ## Accessing Grafana
 
 Once the stack is running, you can access the Grafana dashboards at [http://localhost:3000](http://localhost:3000).
@@ -111,24 +100,24 @@ Login is disabled, and you will be granted anonymous admin access.
 
 1. **`no configuration file provided: not found`**
 
-   This can happen if you are using Docker Snap, which requires that all files Docker needs access to live within your `$HOME` folder. Try running the project from a directory inside your home folder.
+This can happen if you are using Docker Snap, which requires that all files Docker needs access to live within your `$HOME` folder. Try running the project from a directory inside your home folder.
 
 2. **Graphs are broken and my system is dying!**
 
-   Processing Fastly metrics can be resource-intensive, especially with many services. To reduce the load, you can configure the `fastly-exporter` to sample a fraction of your services using the `FASTLY_EXPORTER_OPTIONS` environment variable.
+Processing Fastly metrics can be resource-intensive, especially with many services. To reduce the load, you can configure the `fastly-exporter` to sample a fraction of your services using the `FASTLY_EXPORTER_OPTIONS` environment variable.
 
-   For example, to process metrics for 1/10th of your services:
+For example, to process metrics for 1/10th of your services:
 
-   ```bash
-   export FASTLY_EXPORTER_OPTIONS="-service-shard 1/10"
-   docker compose up
-   ```
+```bash
+export FASTLY_EXPORTER_OPTIONS="-service-shard 1/10"
+docker compose up
+```
 
 3. **No Slack Alerts**
 
-   If you see an error like `channel \"#NO_SLACK_CONFIG_CHANNEL\": unexpected status code 404: 404 page not found`, it means your Slack integration is not configured correctly.
+If you see an error like `channel \"#NO_SLACK_CONFIG_CHANNEL\": unexpected status code 404: 404 page not found`, it means your Slack integration is not configured correctly.
 
-   Ensure that the `$SLACK_API_URL` and `$SLACK_CONFIG_CHANNEL` environment variables are exported correctly before starting the stack.
+Ensure that the `$SLACK_API_URL` and `$SLACK_CONFIG_CHANNEL` environment variables are exported correctly before starting the stack.
 
 ---
 
@@ -138,46 +127,46 @@ If you already have an existing monitoring stack, you can integrate the configur
 
 ### Prometheus
 
-1. **Scrape Configuration**: Add the `fastly-exporter` job to your `prometheus.yml`:
+1. **Scrape Configuration:** Add the `fastly-exporter` job to your `prometheus.yml`:
 
-    ```yaml
-    - job_name: "fastly-exporter"
-      static_configs:
-        - targets: ["fastly-exporter:8080"]
-    ```
+```yaml
+- job_name: "fastly-exporter"
+  static_configs:
+    - targets: ["fastly-exporter:8080"]
+```
 
-    Ensure the `fastly-exporter` container is reachable by your Prometheus instance.
+Ensure the `fastly-exporter` container is reachable by your Prometheus instance.
 
-2. **Alerting Rules**: Copy the rule files from the [`prometheus/rules/`](prometheus/rules/) directory to your Prometheus rules directory and update your `prometheus.yml` to load them:
+2. **Alerting Rules:** Copy the rule files from the [`prometheus/rules/`](prometheus/rules/) directory to your Prometheus rules directory and update your `prometheus.yml` to load them:
 
-    ```yaml
-    rule_files:
-      - "/path/to/your/rules/*.yml"
-    ```
+```yaml
+rule_files:
+  - "/path/to/your/rules/*.yml"
+```
 
 ### Alertmanager
 
-1. **Configuration**: Add the `slack-notifications` receiver from [`alertmanager/alertmanager.yml`](alertmanager/alertmanager.yml) to your Alertmanager configuration. You will also need to add the corresponding route.
+1. **Configuration:** Add the `slack-notifications` receiver from [`alertmanager/alertmanager.yml`](alertmanager/alertmanager.yml) to your Alertmanager configuration. You will also need to add the corresponding route.
 
-2. **Templates**: Copy the template files from [`alertmanager/templates/`](alertmanager/templates/) to your Alertmanager templates directory.
+2. **Templates:** Copy the template files from [`alertmanager/templates/`](alertmanager/templates/) to your Alertmanager templates directory.
 
 ### Grafana
 
-1. **Dashboards**: Copy the dashboard JSON files from the [`grafana/provisioning/dashboards/`](grafana/provisioning/dashboards/) directory to your Grafana dashboards directory.
+1. **Dashboards:** Copy the dashboard JSON files from the [`grafana/provisioning/dashboards/`](grafana/provisioning/dashboards/) directory to your Grafana dashboards directory.
 
-2. **Provisioning**: Configure Grafana to provision the dashboards. You can use the [`grafana/provisioning/dashboards/dashboard.yml`](grafana/provisioning/dashboards/dashboard.yml) as a reference.
+2. **Provisioning:** Configure Grafana to provision the dashboards. You can use the [`grafana/provisioning/dashboards/dashboard.yml`](grafana/provisioning/dashboards/dashboard.yml) as a reference.
 
-3. **Datasource**: Ensure you have a Prometheus datasource configured in Grafana.
+3. **Datasource:** Ensure you have a Prometheus datasource configured in Grafana.
 
 ## Credit
 
-The official dashboards were inspired by the original [fastly-dashboards] project by [@mrnetops]. Their work was featured in the [Magic tricks with Docker (or how to monitor Fastly in about five minutes)][altitude-2020-video] presentation at Fastly Altitude 2020.
+These official dashboards were inspired by the original [fastly-dashboards] project by [@mrnetops]. Their work was featured in the [Magic tricks with Docker (or how to monitor Fastly in about five minutes)][altitude-2020-video] presentation at the Fastly Altitude conference in 2020.
 
 [fastly-dashboards]: https://github.com/mrnetops/fastly-dashboards#
 [compose]: https://github.com/docker/compose
-[fastly-exporter]: https://github.com/peterbourgon/fastly-exporter
+[fastly-exporter]: https://github.com/fastly/fastly-exporter/
 [fastly-token]: https://docs.fastly.com/en/guides/finding-and-managing-your-api-token
-[prom]: https://prometheus.io
+[prometheus]: https://prometheus.io
 [grafana]: https://grafana.com
 [alertmanager]: https://prometheus.io/docs/alerting/latest/alertmanager/
 [slack]: https://www.slack.com
