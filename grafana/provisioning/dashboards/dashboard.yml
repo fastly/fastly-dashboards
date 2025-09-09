@@ -10,7 +10,6 @@ providers:
   allowUiUpdates: true
   options:
     path: /etc/grafana/provisioning/dashboards
-    # Added Fastly-Security and Fastly-Thresholds dashboards
     files:
       - Fastly-Service.json
       - Fastly-Top-Datacenters.json

@@ -58,7 +58,7 @@
       },
       "id": 4,
       "options": {
-        "content": "# Welcome to Fastly Dashboards!\nhttps://github.com/mrnetops/fastly-dashboards\n\n## Services\n\n* [Grafana: localhost:3000](http://localhost:3000)\n* [Fastly-Exporter: localhost:8080](http://localhost:8080)\n* [Prometheus: localhost:9090](http://localhost:9090)\n* [Alertmanager: localhost:9093](http://localhost:9093)\n",
+        "content": "# Welcome to Fastly Dashboards!\nhttps://github.com/fastly/fastly-dashboards\n\n## Services\n\n* [Grafana: localhost:3000](http://localhost:3000)\n* [Fastly-Exporter: localhost:8080](http://localhost:8080)\n* [Prometheus: localhost:9090](http://localhost:9090)\n* [Alertmanager: localhost:9093](http://localhost:9093)\n",
         "mode": "markdown"
       },
       "pluginVersion": "9.1.3",
@@ -78,7 +78,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "Fastly Home",
-  "uid": "IuQhLyVVk",
+  "uid": "FastlyHome",
   "version": 1,
   "weekStart": ""
 }

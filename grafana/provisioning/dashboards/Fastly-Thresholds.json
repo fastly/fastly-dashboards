@@ -1,6 +1,6 @@
 {
   "id": null,
-  "uid": "fastly-thresholds",
+  "uid": "FastlyThresholds",
   "title": "Fastly Thresholds & Health",
   "tags": ["fastly", "thresholds", "health"],
   "timezone": "browser",
