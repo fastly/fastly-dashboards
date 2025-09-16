@@ -2,7 +2,7 @@
 
 A comprehensive, out-of-the-box monitoring and alerting solution for Fastly services.
 
-This repository contains a [Docker Compose][compose] setup that deploys a full monitoring stack, including: [Prometheus Fastly Exporter][fastly-exporter], [Prometheus][prometheus], [Alertmanager][alertmanager], and [Grafana][grafana]. It comes pre-loaded with a suite of dashboards and alerting rules, with built-in [Slack][slack] integration.
+This repository contains a [Docker Compose][compose] setup that deploys a full monitoring stack, including: [The Fastly Exporter for Prometheus][fastly-exporter], [Prometheus][prometheus], [Alertmanager][alertmanager], and [Grafana][grafana]. It comes pre-loaded with a suite of dashboards and alerting rules, with built-in [Slack][slack] integration.
 
 ## Features
 
@@ -49,10 +49,10 @@ This project uses the following containerized services:
 
 | Service         | Image                            | Version   |
 | :-------------- | :------------------------------- | :-------- |
-| Prometheus      | `prom/prometheus`                | `v2.37.0` |
-| Alertmanager    | `prom/alertmanager`              | `v0.24.0` |
-| Grafana         | `grafana/grafana`                | `9.1.3`   |
-| Fastly Exporter | `ghcr.io/fastly/fastly-exporter` | `v7.2.4`  |
+| Prometheus      | `prom/prometheus`                | `v2.53.5` |
+| Alertmanager    | `prom/alertmanager`              | `v0.28.1` |
+| Grafana         | `grafana/grafana`                | `12.1`   |
+| Fastly Exporter | `ghcr.io/fastly/fastly-exporter` | `v9.5.0`  |
 | Envsubst        | `bhgedigital/envsubst`           | `latest`  |
 
 ## Getting Started
