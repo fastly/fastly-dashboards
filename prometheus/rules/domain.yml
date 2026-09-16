@@ -1,0 +1,115 @@
+groups:
+  - name: domain
+    rules:
+
+    ##
+    ## Domain Inspector recording rules.
+    ##
+    ## The exporter has emitted fastly_domain_* since v7.5.0 (June 2023). Nothing
+    ## in this repo consumed them until now.
+    ##
+    ## Two things differ from rules/origin.yml and shape what is possible here:
+    ##
+    ## 1. Domain Inspector has no latency metric. fastly_origin_latency_seconds is
+    ##    the only latency histogram the exporter emits, so there is no domain
+    ##    equivalent of the p50/p99 rules or their alerts.
+    ## 2. Domain Inspector reports status separately for what was delivered to the
+    ##    end user (fastly_domain_status_group_total) and what came back from origin
+    ##    (fastly_domain_origin_status_group_total). Origin Inspector has only the
+    ##    one view. Both are kept below, because a domain serving 200s from cache
+    ##    while its origin returns 5xx is a case worth being able to see.
+    ##
+    ## Deliberately no alert rules. rules/origin.yml drives its alerts from warn
+    ## ratios and hysteresis thresholds that were tuned against real traffic. The
+    ## equivalent numbers for domains are not known yet, and shipping alerts with
+    ## invented thresholds is worse than shipping none. Add them once someone has
+    ## watched the dashboard against a real account.
+    ##
+    ## These records are defined here and nowhere else. The account, datacenter,
+    ## origin and service records are each defined twice in this repo, once in the
+    ## per-scope file and again in the cross-cutting files, which makes Prometheus
+    ## evaluate both groups. Not repeating that here.
+    ##
+
+    - record: fastly_domain:requests
+      expr: sum(rate(fastly_domain_requests_total[120s])) by (domain,service_id,service_name)
+    - record: fastly_domain:edge_requests
+      expr: sum(rate(fastly_domain_edge_requests_total[120s])) by (domain,service_id,service_name)
+
+    # Bits per second delivered to end users, headers included. Uses the edge_resp_*
+    # counters, which the exporter describes as bytes "delivered from Fastly to the
+    # end user", rather than the resp_* counters, which are total bytes delivered.
+    - record: fastly_domain:bandwidth_bps
+      expr: |
+        8 * sum(rate(fastly_domain_edge_resp_body_bytes_total[120s]) + rate(fastly_domain_edge_resp_header_bytes_total[120s]))
+        by (domain,service_id,service_name)
+
+    # Total bytes delivered, headers included. Differs from bandwidth_bps above by
+    # whatever is delivered other than on the final hop to the end user, so on a
+    # shielded service this reads higher.
+    - record: fastly_domain:delivered_bytes_per_second
+      expr: |
+        sum(rate(fastly_domain_resp_body_bytes_total[120s]) + rate(fastly_domain_resp_header_bytes_total[120s]))
+        by (domain,service_id,service_name)
+
+    # Bytes per second sent to origin, headers included.
+    - record: fastly_domain:bereq_bytes_per_second
+      expr: |
+        sum(rate(fastly_domain_bereq_body_bytes_total[120s]) + rate(fastly_domain_bereq_header_bytes_total[120s]))
+        by (domain,service_id,service_name)
+
+    # Bytes per second received from origin, headers included.
+    - record: fastly_domain:origin_fetch_bytes_per_second
+      expr: |
+        sum(rate(fastly_domain_origin_fetch_resp_body_bytes[120s]) + rate(fastly_domain_origin_fetch_resp_header_bytes[120s]))
+        by (domain,service_id,service_name)
+
+    # Hits over hits plus misses, which is how the exporter defines
+    # fastly_domain_edge_hit_ratio. Recomputed from the counters rather than
+    # aggregating that gauge: averaging a per-POP ratio across POPs weights a
+    # quiet datacenter the same as a busy one. The gauge is still the right thing
+    # to read when scoped to a single datacenter.
+    - record: fastly_domain:edge_hit_ratio
+      expr: |
+        sum(rate(fastly_domain_edge_hit_requests_total[120s])) by (domain,service_id,service_name)
+        / (
+          sum(rate(fastly_domain_edge_hit_requests_total[120s])) by (domain,service_id,service_name)
+          + sum(rate(fastly_domain_edge_miss_requests_total[120s])) by (domain,service_id,service_name)
+        )
+
+    # Delivered to the end user.
+    - record: fastly_domain:4xx_ratio
+      expr: |
+        sum(rate(fastly_domain_status_group_total{status_group="4xx"}[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_status_group_total[120s])) by (domain,service_id,service_name)
+    - record: fastly_domain:5xx_ratio
+      expr: |
+        sum(rate(fastly_domain_status_group_total{status_group="5xx"}[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_status_group_total[120s])) by (domain,service_id,service_name)
+
+    # Returned by origin, which can differ from what the end user saw.
+    - record: fastly_domain:origin_4xx_ratio
+      expr: |
+        sum(rate(fastly_domain_origin_status_group_total{status_group="4xx"}[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_origin_status_group_total[120s])) by (domain,service_id,service_name)
+    - record: fastly_domain:origin_5xx_ratio
+      expr: |
+        sum(rate(fastly_domain_origin_status_group_total{status_group="5xx"}[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_origin_status_group_total[120s])) by (domain,service_id,service_name)
+
+    - record: fastly_domain:origin_fetches
+      expr: sum(rate(fastly_domain_origin_fetches[120s])) by (domain,service_id,service_name)
+
+    # Share of end-user requests arriving over TLS, and over HTTP/2 or HTTP/3.
+    - record: fastly_domain:tls_ratio
+      expr: |
+        sum(rate(fastly_domain_tls_total[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_requests_total[120s])) by (domain,service_id,service_name)
+    - record: fastly_domain:http2_ratio
+      expr: |
+        sum(rate(fastly_domain_http2_total[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_requests_total[120s])) by (domain,service_id,service_name)
+    - record: fastly_domain:http3_ratio
+      expr: |
+        sum(rate(fastly_domain_http3_total[120s])) by (domain,service_id,service_name)
+        / sum(rate(fastly_domain_requests_total[120s])) by (domain,service_id,service_name)

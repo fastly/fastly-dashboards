@@ -24,6 +24,9 @@ The following Grafana dashboards are provisioned automatically:
 - **Top Services:** Summary of your most active services
 - **Top Datacenters:** A breakdown of your traffic by Fastly datacenter
 - **Top Origins:** A summary of your most active origin servers
+- **Top Domains:** A summary of your most active domains, from Domain Inspector
+
+Top Domains needs your account to be entitled to [Domain Inspector](https://docs.fastly.com/products/domain-inspector) and the product enabled on the service. The exporter then polls it automatically, with no flag to set. Top Origins has the same relationship with [Origin Inspector](https://docs.fastly.com/products/origin-inspector). Without the entitlement those two dashboards have no data to show, and the rest are unaffected.
 
 ## Alerting
 
