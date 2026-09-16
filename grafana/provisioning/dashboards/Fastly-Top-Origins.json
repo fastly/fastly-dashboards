@@ -1111,7 +1111,7 @@
           "targets": [
             {
               "datasource": "prometheus-ds",
-              "expr": "sum(rate(fastly_rt_errors_total{origin=~\"$top_origin_id_error_per_request\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (service_name, service_id) \n",
+              "expr": "sum(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$top_origin_id_error_per_request\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (origin, service_id, service_name) \n",
               "legendFormat": "{{origin}}",
               "refId": "A"
             }
@@ -1203,7 +1203,7 @@
           "targets": [
             {
               "datasource": "prometheus-ds",
-              "expr": "sum(rate(fastly_rt_errors_total{origin=~\"$top_origin_id_impaired\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (service_id, service_name) ",
+              "expr": "sum(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$top_origin_id_impaired\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (origin, service_id, service_name) ",
               "legendFormat": "{{origin}}",
               "refId": "A"
             }
@@ -1500,14 +1500,14 @@
           ]
         },
         "datasource": "prometheus-ds",
-        "definition": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
+        "definition": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
         "hide": 2,
         "includeAll": true,
         "multi": true,
         "name": "top_origin_id_errors_total",
         "options": [],
         "query": {
-          "query": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
+          "query": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
           "refId": "Prometheus-top_origin_id_errors_total-Variable-Query"
         },
         "refresh": 2,
@@ -1560,14 +1560,14 @@
           ]
         },
         "datasource": "prometheus-ds",
-        "definition": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
+        "definition": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
         "hide": 2,
         "includeAll": true,
         "multi": true,
         "name": "top_origin_id_error_per_request",
         "options": [],
         "query": {
-          "query": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
+          "query": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
           "refId": "Prometheus-top_origin_id_error_per_request-Variable-Query"
         },
         "refresh": 2,
@@ -1590,14 +1590,14 @@
           ]
         },
         "datasource": "prometheus-ds",
-        "definition": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
+        "definition": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
         "hide": 2,
         "includeAll": true,
         "multi": true,
         "name": "top_origin_id_impaired",
         "options": [],
         "query": {
-          "query": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
+          "query": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
           "refId": "Prometheus-top_origin_id_impaired-Variable-Query"
         },
         "refresh": 2,
