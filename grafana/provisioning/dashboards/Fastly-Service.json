@@ -2824,9 +2824,7 @@
   "refresh": "30s",
   "schemaVersion": 22,
   "style": "dark",
-  "tags": [
-    "Fastly"
-  ],
+  "tags": ["fastly"],
   "templating": {
     "list": [
       {

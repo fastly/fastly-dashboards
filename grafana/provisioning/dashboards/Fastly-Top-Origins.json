@@ -1544,9 +1544,7 @@
   "refresh": "30s",
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [
-    "Fastly"
-  ],
+  "tags": ["fastly", "origin-inspector"],
   "templating": {
     "list": [
       {

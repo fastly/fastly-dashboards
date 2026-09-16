@@ -1194,10 +1194,7 @@
   "refresh": "1m",
   "schemaVersion": 22,
   "style": "dark",
-  "tags": [
-    "Fastly",
-    "Compute"
-  ],
+  "tags": ["fastly", "compute"],
   "templating": {
     "list": [
       {
