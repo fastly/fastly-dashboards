@@ -2,13 +2,21 @@ groups:
   - name: cache
     rules:
       # Service-level cache metrics
+      #
+      # The exporter does not emit the real-time API's all_* rollups
+      # (all_edge_hit_requests, all_edge_miss_requests, all_error_requests),
+      # which combine VCL and Compute. The names below are the VCL-scoped
+      # equivalents it does emit. On accounts that serve traffic from Compute
+      # services, the numerators cover VCL only while fastly_rt_edge_total
+      # counts every request, so the ratios read low.
       - record: fastly_service:cache_hit_ratio
-        expr: sum(rate(all_edge_hit_requests[120s])) by (service_id,service_name) / sum(rate(edge_requests[120s])) by (service_id,service_name)
+        expr: sum(rate(fastly_rt_edge_hit_requests_total[120s])) by (service_id,service_name) / sum(rate(fastly_rt_edge_total[120s])) by (service_id,service_name)
       - record: fastly_service:cache_miss_ratio
-        expr: sum(rate(all_edge_miss_requests[120s])) by (service_id,service_name) / sum(rate(edge_requests[120s])) by (service_id,service_name)
+        expr: sum(rate(fastly_rt_edge_miss_requests_total[120s])) by (service_id,service_name) / sum(rate(fastly_rt_edge_total[120s])) by (service_id,service_name)
       # Service-level edge error ratio
+      # fastly_rt_errors_total counts cache errors, not every error response.
       - record: fastly_service:edge_error_ratio
-        expr: sum(rate(all_error_requests[120s])) by (service_id,service_name) / sum(rate(edge_requests[120s])) by (service_id,service_name)
+        expr: sum(rate(fastly_rt_errors_total[120s])) by (service_id,service_name) / sum(rate(fastly_rt_edge_total[120s])) by (service_id,service_name)
       # Datacenter-level cache metrics (if available)
       # - record: fastly_datacenter:cache_hit_ratio
       #   expr: ...
