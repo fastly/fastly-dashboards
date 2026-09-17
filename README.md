@@ -52,7 +52,7 @@ This project uses the following containerized services:
 | Prometheus      | `prom/prometheus`                | `v2.53.5` |
 | Alertmanager    | `prom/alertmanager`              | `v0.28.1` |
 | Grafana         | `grafana/grafana`                | `12.1`   |
-| Fastly Exporter | `ghcr.io/fastly/fastly-exporter` | `v9.5.0`  |
+| Fastly Exporter | `ghcr.io/fastly/fastly-exporter` | `v10.3.0` |
 | Envsubst        | `bhgedigital/envsubst`           | `latest`  |
 
 ## Getting Started
