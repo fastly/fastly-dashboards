@@ -1054,7 +1054,7 @@
         "datasource": "prometheus-ds",
         "definition": "label_values(fastly_origin_responses_total, datacenter)",
         "includeAll": true,
-        "label": "Datacenter",
+        "label": "POP",
         "multi": true,
         "name": "datacenter",
         "options": [],

@@ -47,7 +47,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "light-blue",
+                "value": null
               }
             ]
           },
@@ -63,7 +64,7 @@
       },
       "id": 1,
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -103,7 +104,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "light-blue",
+                "value": null
               }
             ]
           },
@@ -119,7 +121,7 @@
       },
       "id": 2,
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -158,7 +160,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "light-blue",
+                "value": null
               }
             ]
           },
@@ -174,7 +177,7 @@
       },
       "id": 3,
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -215,7 +218,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "light-blue",
+                "value": null
               }
             ]
           },
@@ -231,7 +235,7 @@
       },
       "id": 4,
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -540,7 +544,7 @@
     },
     {
       "datasource": "prometheus-ds",
-      "description": "The exporter's own fastly_domain_edge_hit_ratio gauge, which is reported per datacenter. Grouped by datacenter because that is the granularity it is valid at; averaging it across POPs would weight a quiet POP the same as a busy one.",
+      "description": "The exporter's own fastly_domain_edge_hit_ratio gauge, which is reported per POP. Grouped by POP because that is the granularity it is valid at; averaging it across POPs would weight a quiet POP the same as a busy one.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1099,7 +1103,7 @@
     },
     {
       "datasource": "prometheus-ds",
-      "description": "The exporter's fastly_domain_origin_offload gauge: response bytes served from the edge against what came from origin. Reported per datacenter, so grouped that way rather than averaged across POPs.",
+      "description": "The exporter's fastly_domain_origin_offload gauge: response bytes served from the edge against what came from origin. Reported per POP, so grouped that way rather than averaged across POPs.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1917,7 +1921,7 @@
         "datasource": "prometheus-ds",
         "definition": "label_values(fastly_domain_requests_total, datacenter)",
         "includeAll": true,
-        "label": "datacenter",
+        "label": "POP",
         "multi": true,
         "name": "datacenter",
         "options": [],

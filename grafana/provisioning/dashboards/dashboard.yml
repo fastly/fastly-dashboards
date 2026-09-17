@@ -9,14 +9,8 @@ providers:
   editable: true
   allowUiUpdates: true
   options:
+    # Grafana loads every dashboard JSON found under this path. There is no
+    # per-file allowlist in the provisioning schema, so the "files:" list that
+    # used to sit here was inert: Fastly-Top-Domains.json was never in it and
+    # provisioned anyway. Removed so it cannot drift again.
     path: /etc/grafana/provisioning/dashboards
-    files:
-      - Fastly-Service.json
-      - Fastly-Top-Datacenters.json
-      - Fastly-Top-Origins.json
-      - Fastly-Top-Services.json
-      - Fastly-Security.json
-      - Fastly-Thresholds.json
-      - Fastly-Compute.json
-      - Fastly-Dashboard.json
-      - Home.json

@@ -55,11 +55,11 @@
             "uid": "prometheus-ds"
           },
           "expr": "count(sum(rate(fastly_rt_requests_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) by (datacenter) >0)",
-          "legendFormat": "Datacenters",
+          "legendFormat": "POPs",
           "refId": "A"
         }
       ],
-      "title": "ACTIVELY USED DATACENTERS",
+      "title": "ACTIVELY USED POPS",
       "transparent": true,
       "type": "timeseries"
     },
@@ -96,12 +96,12 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Top Services Dashboard by Datacenter",
+            "title": "Top Services Dashboard by POP",
             "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           },
           {
             "targetBlank": true,
-            "title": "Service Dashboard by Datacenter",
+            "title": "Service Dashboard by POP",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           }
         ],
@@ -151,12 +151,12 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Top Services Dashboard by Datacenter",
+            "title": "Top Services Dashboard by POP",
             "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           },
           {
             "targetBlank": true,
-            "title": "Service Dashboard by Datacenter",
+            "title": "Service Dashboard by POP",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           }
         ],
@@ -206,12 +206,12 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Top Services Dashboard by Datacenter",
+            "title": "Top Services Dashboard by POP",
             "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           },
           {
             "targetBlank": true,
-            "title": "Service Dashboard by Datacenter",
+            "title": "Service Dashboard by POP",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           }
         ],
@@ -259,12 +259,12 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Top Services Dashboard by Datacenter",
+            "title": "Top Services Dashboard by POP",
             "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           },
           {
             "targetBlank": true,
-            "title": "Service Dashboard by Datacenter",
+            "title": "Service Dashboard by POP",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           }
         ],
@@ -312,12 +312,12 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Top Services Dashboard by Datacenter",
+            "title": "Top Services Dashboard by POP",
             "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           },
           {
             "targetBlank": true,
-            "title": "Service Dashboard by Datacenter",
+            "title": "Service Dashboard by POP",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           }
         ],
@@ -365,12 +365,12 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Top Services Dashboard by Datacenter",
+            "title": "Top Services Dashboard by POP",
             "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           },
           {
             "targetBlank": true,
-            "title": "Service Dashboard by Datacenter",
+            "title": "Service Dashboard by POP",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
           }
         ],
@@ -429,12 +429,12 @@
             "dataLinks": [
               {
                 "targetBlank": true,
-                "title": "Top Services Dashboard by Datacenter",
+                "title": "Top Services Dashboard by POP",
                 "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               },
               {
                 "targetBlank": true,
-                "title": "Service Dashboard by Datacenter",
+                "title": "Service Dashboard by POP",
                 "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               }
             ],
@@ -482,12 +482,12 @@
             "dataLinks": [
               {
                 "targetBlank": true,
-                "title": "Top Services Dashboard by Datacenter",
+                "title": "Top Services Dashboard by POP",
                 "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               },
               {
                 "targetBlank": true,
-                "title": "Service Dashboard by Datacenter",
+                "title": "Service Dashboard by POP",
                 "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               }
             ],
@@ -539,12 +539,12 @@
             "dataLinks": [
               {
                 "targetBlank": true,
-                "title": "Top Services Dashboard by Datacenter",
+                "title": "Top Services Dashboard by POP",
                 "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               },
               {
                 "targetBlank": true,
-                "title": "Service Dashboard by Datacenter",
+                "title": "Service Dashboard by POP",
                 "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               }
             ],
@@ -596,12 +596,12 @@
             "dataLinks": [
               {
                 "targetBlank": true,
-                "title": "Top Services Dashboard by Datacenter",
+                "title": "Top Services Dashboard by POP",
                 "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               },
               {
                 "targetBlank": true,
-                "title": "Service Dashboard by Datacenter",
+                "title": "Service Dashboard by POP",
                 "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               }
             ],
@@ -650,12 +650,12 @@
             "dataLinks": [
               {
                 "targetBlank": true,
-                "title": "Top Services Dashboard by Datacenter",
+                "title": "Top Services Dashboard by POP",
                 "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               },
               {
                 "targetBlank": true,
-                "title": "Service Dashboard by Datacenter",
+                "title": "Service Dashboard by POP",
                 "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               }
             ],
@@ -704,12 +704,12 @@
             "dataLinks": [
               {
                 "targetBlank": true,
-                "title": "Top Services Dashboard by Datacenter",
+                "title": "Top Services Dashboard by POP",
                 "url": "/d/ubXmEIyZz/fastly-top-services?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               },
               {
                 "targetBlank": true,
-                "title": "Service Dashboard by Datacenter",
+                "title": "Service Dashboard by POP",
                 "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__url_time_range}"
               }
             ],
@@ -815,7 +815,7 @@
         "datasource": "prometheus-ds",
         "definition": "label_values(fastly_rt_requests_total, datacenter)",
         "includeAll": true,
-        "label": "Datacenter",
+        "label": "POP",
         "multi": true,
         "name": "datacenter",
         "options": [
@@ -1100,7 +1100,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Fastly Top Datacenters",
-  "uid": "FastlyTopDatacenters",
+  "title": "Fastly Top POPs",
+  "uid": "FastlyTopPOPs",
   "version": 7
 }
