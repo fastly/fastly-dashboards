@@ -27,10 +27,6 @@ The following Grafana dashboards are provisioned automatically:
 
 ### Screenshots
 
-Account-wide traffic, cache and bandwidth, from **Fastly Dashboard**:
-
-![Fastly Dashboard, showing hits, hit ratio, requests, errors, bandwidth and origin latency](docs/images/fastly-dashboard.png)
-
 Per-origin ranking with a service and datacenter filter, from **Fastly Top Origins**:
 
 ![Fastly Top Origins, ranking origins by requests, bandwidth, 4xx, 5xx and p99 latency](docs/images/fastly-top-origins.png)
