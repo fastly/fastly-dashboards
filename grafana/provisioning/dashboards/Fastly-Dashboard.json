@@ -28,7 +28,8 @@
       "description": "Number of user requests delivered from cache.",
       "fieldConfig": {
         "defaults": {
-          "unit": "locale"
+          "unit": "locale",
+          "decimals": 0
         },
         "overrides": []
       },
@@ -116,7 +117,8 @@
       "description": "Number of user requests for objects not in cache (i.e. cache miss).",
       "fieldConfig": {
         "defaults": {
-          "unit": "locale"
+          "unit": "locale",
+          "decimals": 0
         },
         "overrides": []
       },
@@ -247,7 +249,8 @@
       "description": "Total number of requests received in a second.",
       "fieldConfig": {
         "defaults": {
-          "unit": "locale"
+          "unit": "locale",
+          "decimals": 0
         },
         "overrides": []
       },
@@ -290,7 +293,8 @@
       "description": "Number of user requests producing an error.",
       "fieldConfig": {
         "defaults": {
-          "unit": "locale"
+          "unit": "locale",
+          "decimals": 0
         },
         "overrides": []
       },
