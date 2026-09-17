@@ -25,6 +25,22 @@ The following Grafana dashboards are provisioned automatically:
 - **Top Datacenters:** A breakdown of your traffic by Fastly datacenter
 - **Top Origins:** A summary of your most active origin servers
 
+### Screenshots
+
+Account-wide traffic, cache and bandwidth, from **Fastly Dashboard**:
+
+![Fastly Dashboard, showing hits, hit ratio, requests, errors, bandwidth and origin latency](docs/images/fastly-dashboard.png)
+
+Per-origin ranking with a service and datacenter filter, from **Fastly Top Origins**:
+
+![Fastly Top Origins, ranking origins by requests, bandwidth, 4xx, 5xx and p99 latency](docs/images/fastly-top-origins.png)
+
+Request volume, execution time and guest errors for Compute services, from **Fastly Compute**:
+
+![Fastly Compute, showing status code ratios, average execution time, resource usage and resource limits](docs/images/fastly-compute.png)
+
+The figures in these screenshots come from synthetic data, not a real Fastly account.
+
 ## Alerting
 
 The stack includes 21 pre-configured Prometheus alerting rules that are sent to Alertmanager and can be routed to Slack. The same five alerts are defined at each of four scopes, plus one demo alert:
