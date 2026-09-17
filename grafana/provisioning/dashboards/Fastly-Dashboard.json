@@ -29,7 +29,19 @@
       "fieldConfig": {
         "defaults": {
           "unit": "locale",
-          "decimals": 0
+          "decimals": 0,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -73,7 +85,19 @@
       "description": "Average millisecond interval from a cache receiving a HTTP request to it sending a cached response's first byte. Also know as Time-To-First-Byte (TTFB).",
       "fieldConfig": {
         "defaults": {
-          "unit": "none"
+          "unit": "none",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -118,7 +142,19 @@
       "fieldConfig": {
         "defaults": {
           "unit": "locale",
-          "decimals": 0
+          "decimals": 0,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -162,7 +198,19 @@
       "description": "Requests delivered from cache divided by the number of cacheable requests (hits + misses).",
       "fieldConfig": {
         "defaults": {
-          "unit": "percentunit"
+          "unit": "percentunit",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -205,7 +253,19 @@
       "description": "Average ms interval from when a cache issues a HTTP request to the origin to when the response is received.",
       "fieldConfig": {
         "defaults": {
-          "unit": "none"
+          "unit": "none",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -250,7 +310,19 @@
       "fieldConfig": {
         "defaults": {
           "unit": "locale",
-          "decimals": 0
+          "decimals": 0,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -294,7 +366,19 @@
       "fieldConfig": {
         "defaults": {
           "unit": "locale",
-          "decimals": 0
+          "decimals": 0,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },

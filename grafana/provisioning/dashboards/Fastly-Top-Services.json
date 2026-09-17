@@ -54,7 +54,7 @@
             "type": "prometheus",
             "uid": "prometheus-ds"
           },
-          "expr": "count(sum(fastly_rt_requests_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}) by (service_id))",
+          "expr": "count(sum(rate(fastly_rt_requests_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) by (service_id) >0)",
           "legendFormat": "Services",
           "refId": "A"
         }
