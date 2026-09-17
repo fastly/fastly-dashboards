@@ -8,7 +8,7 @@ This repository contains a [Docker Compose][compose] setup that deploys a full m
 
 - **Turnkey Setup:** Launch a complete Fastly monitoring stack with a single command
 - **Comprehensive Dashboards:** Visualize real-time and historical metrics with a rich set of pre-built Grafana dashboards
-- **Extensive Alerting:** Over 70 pre-configured Prometheus alerts to proactively monitor service health, performance, and security
+- **Alerting:** 21 pre-configured Prometheus alerts covering error rates and latency at account, datacenter, origin, and service scope
 - **Slack Integration:** Receive timely alerts directly in your Slack workspace
 - **Customizable:** Easily extend the dashboards and alerting rules to fit your specific needs
 
@@ -27,19 +27,19 @@ The following Grafana dashboards are provisioned automatically:
 
 ## Alerting
 
-The stack includes a set of pre-configured Prometheus alerting rules that are sent to Alertmanager and can be routed to Slack. The rules cover the following categories:
+The stack includes 21 pre-configured Prometheus alerting rules that are sent to Alertmanager and can be routed to Slack. The same five alerts are defined at each of four scopes, plus one demo alert:
 
-- Account
-- Cache Performance
-- Compute
-- Datacenter Health
-- Errors
-- Latency
-- Origin Health
-- Security
-- Service Health
-- Thresholds
-- Traffic Volume
+| Scope      | Rule file        | Alerts                                                      |
+| :--------- | :--------------- | :---------------------------------------------------------- |
+| Account    | `account.yml`    | 4xx ratio, 5xx ratio, error ratio, p50 latency, p99 latency |
+| Datacenter | `datacenter.yml` | the same five, per Fastly POP                               |
+| Origin     | `origin.yml`     | the same five, per origin                                   |
+| Service    | `service.yml`    | the same five, per service                                  |
+| Demo       | `demo.yml`       | one example alert                                           |
+
+Each alert uses a hold-down timer and hysteresis so it does not flap, and fires only once the scope it watches passes a minimum level of traffic.
+
+The remaining rule files define recording rules and no alerts: `cache.yml`, `compute.yml`, `errors.yml`, `latency.yml`, `security.yml`, `thresholds.yml`, and `traffic.yml`. They feed the dashboards, and give you ratios to build your own alerts on.
 
 You can customize and add your own rules in the [`prometheus/rules/`](prometheus/rules/) directory.
 
@@ -52,7 +52,7 @@ This project uses the following containerized services:
 | Prometheus      | `prom/prometheus`                | `v2.53.5` |
 | Alertmanager    | `prom/alertmanager`              | `v0.28.1` |
 | Grafana         | `grafana/grafana`                | `12.1`   |
-| Fastly Exporter | `ghcr.io/fastly/fastly-exporter` | `v9.5.0`  |
+| Fastly Exporter | `ghcr.io/fastly/fastly-exporter` | `v10.3.0` |
 | Envsubst        | `bhgedigital/envsubst`           | `latest`  |
 
 ## Getting Started

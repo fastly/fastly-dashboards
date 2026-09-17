@@ -72,7 +72,7 @@ services:
       - grafana_data:/var/lib/grafana
 
   fastly-exporter:
-    image: ghcr.io/fastly/fastly-exporter:v9.5.0
+    image: ghcr.io/fastly/fastly-exporter:v10.3.0
     command: ${FASTLY_EXPORTER_OPTIONS:--namespace fastly}
     environment:
       - FASTLY_API_TOKEN=${FASTLY_API_TOKEN}

@@ -19,9 +19,13 @@ groups:
       expr: |
         sum(rate(fastly_origin_status_group_total{status_group="5xx"}[120s])) by (origin,service_id,service_name) 
         / sum(rate(fastly_origin_status_group_total[120s])) by (origin,service_id,service_name)
+    # fastly_rt_errors_total carries no origin label, so grouping it by origin
+    # produced origin="" and the division against fastly_origin:requests never
+    # matched. Origin Inspector has no cache-error counter, so origin-scoped
+    # errors are 5xx responses from the origin.
     - record: fastly_origin:errors_ratio
       expr: |
-        sum(rate(fastly_rt_errors_total[120s])) by (origin,service_id,service_name) 
+        sum(rate(fastly_origin_status_group_total{status_group="5xx"}[120s])) by (origin,service_id,service_name)
         / fastly_origin:requests
     - record: fastly_origin:latency_p50_seconds
       expr: histogram_quantile(0.5,sum(rate(fastly_origin_latency_seconds_bucket[120s])) by (le,origin,service_id,service_name))

@@ -67,7 +67,7 @@
   ],
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [],
+  "tags": ["fastly"],
   "templating": {
     "list": []
   },

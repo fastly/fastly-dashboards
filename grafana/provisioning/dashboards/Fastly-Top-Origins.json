@@ -1111,7 +1111,7 @@
           "targets": [
             {
               "datasource": "prometheus-ds",
-              "expr": "sum(rate(fastly_rt_errors_total{origin=~\"$top_origin_id_error_per_request\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (service_name, service_id) \n",
+              "expr": "sum(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$top_origin_id_error_per_request\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (origin, service_id, service_name) \n",
               "legendFormat": "{{origin}}",
               "refId": "A"
             }
@@ -1203,7 +1203,7 @@
           "targets": [
             {
               "datasource": "prometheus-ds",
-              "expr": "sum(rate(fastly_rt_errors_total{origin=~\"$top_origin_id_impaired\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (service_id, service_name) ",
+              "expr": "sum(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$top_origin_id_impaired\", origin=~\"$origin\", service_name=~\"$service_name\", datacenter=~\"$datacenter\"}[$rate])) by (origin, service_id, service_name) ",
               "legendFormat": "{{origin}}",
               "refId": "A"
             }
@@ -1248,14 +1248,303 @@
       ],
       "title": "MISC",
       "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 40,
+      "panels": [],
+      "title": "SOURCE AND STATUS DETAIL",
+      "type": "row"
+    },
+    {
+      "datasource": "prometheus-ds",
+      "id": 41,
+      "title": "REQUESTS BY SOURCE",
+      "type": "timeseries",
+      "description": "Origin Inspector labels every metric with source: delivery, compute or waf, identifying which part of the Fastly platform made the origin request. Nothing in this repo used that label before.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "unit": "reqps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": "prometheus-ds",
+          "editorMode": "code",
+          "expr": "sum(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) by (source)",
+          "legendFormat": "{{source}}",
+          "range": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": "prometheus-ds",
+      "id": 42,
+      "title": "ORIGIN STATUS CODES",
+      "type": "timeseries",
+      "description": "Individual status codes. The 4XX and 5XX panels above group by status_group, so they cannot distinguish a 503 from a 502.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "unit": "reqps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": "prometheus-ds",
+          "editorMode": "code",
+          "expr": "topk(10, sum(rate(fastly_origin_status_code_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) by (status_code))",
+          "legendFormat": "{{status_code}}",
+          "range": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": "prometheus-ds",
+      "id": 43,
+      "title": "ORIGIN RESPONSE BYTES BY SOURCE",
+      "type": "timeseries",
+      "description": "Header bytes read 0 for source=compute and source=waf on every exporter release up to v10.3.0: pkg/origin/process.go adds those two sources' header bytes to RespBodyBytesTotal instead, so the header counter stays empty and the body counter is inflated. Only source=delivery is correct here until that is fixed upstream.",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "unit": "Bps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": "prometheus-ds",
+          "editorMode": "code",
+          "expr": "sum(rate(fastly_origin_resp_body_bytes_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) by (source)",
+          "legendFormat": "body {{source}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": "prometheus-ds",
+          "editorMode": "code",
+          "expr": "sum(rate(fastly_origin_resp_header_bytes_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) by (source)",
+          "legendFormat": "header {{source}}",
+          "range": true,
+          "refId": "B"
+        }
+      ]
     }
   ],
   "refresh": "30s",
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [
-    "Fastly"
-  ],
+  "tags": ["fastly", "origin-inspector"],
   "templating": {
     "list": [
       {
@@ -1500,14 +1789,14 @@
           ]
         },
         "datasource": "prometheus-ds",
-        "definition": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
+        "definition": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
         "hide": 2,
         "includeAll": true,
         "multi": true,
         "name": "top_origin_id_errors_total",
         "options": [],
         "query": {
-          "query": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
+          "query": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))\n",
           "refId": "Prometheus-top_origin_id_errors_total-Variable-Query"
         },
         "refresh": 2,
@@ -1560,14 +1849,14 @@
           ]
         },
         "datasource": "prometheus-ds",
-        "definition": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
+        "definition": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
         "hide": 2,
         "includeAll": true,
         "multi": true,
         "name": "top_origin_id_error_per_request",
         "options": [],
         "query": {
-          "query": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
+          "query": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin)))",
           "refId": "Prometheus-top_origin_id_error_per_request-Variable-Query"
         },
         "refresh": 2,
@@ -1590,14 +1879,14 @@
           ]
         },
         "datasource": "prometheus-ds",
-        "definition": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
+        "definition": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
         "hide": 2,
         "includeAll": true,
         "multi": true,
         "name": "top_origin_id_impaired",
         "options": [],
         "query": {
-          "query": "query_result(topk(10, max(rate(fastly_rt_errors_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
+          "query": "query_result(topk(10, max(rate(fastly_origin_status_group_total{status_group=\"5xx\", origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) / max(rate(fastly_origin_responses_total{origin=~\"$origin\", service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[${__range_s}s])) by (origin) ))",
           "refId": "Prometheus-top_origin_id_impaired-Variable-Query"
         },
         "refresh": 2,
