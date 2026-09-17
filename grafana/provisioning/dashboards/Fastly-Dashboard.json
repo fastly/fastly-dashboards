@@ -82,10 +82,10 @@
         "type": "prometheus",
         "uid": "prometheus-ds"
       },
-      "description": "Average millisecond interval from a cache receiving a HTTP request to it sending a cached response's first byte. Also know as Time-To-First-Byte (TTFB).",
+      "description": "Average interval from a cache receiving an HTTP request to it sending a cached response's first byte, also known as Time-To-First-Byte (TTFB). Total hit processing time divided by hit count, so it is time per hit rather than time per second.",
       "fieldConfig": {
         "defaults": {
-          "unit": "none",
+          "unit": "s",
           "color": {
             "mode": "thresholds"
           },
@@ -122,7 +122,7 @@
             "type": "prometheus",
             "uid": "prometheus-ds"
           },
-          "expr": "avg(rate(fastly_rt_hits_time_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate]))",
+          "expr": "sum(rate(fastly_rt_hits_time_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) / sum(rate(fastly_rt_hits_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -250,10 +250,10 @@
         "type": "prometheus",
         "uid": "prometheus-ds"
       },
-      "description": "Average ms interval from when a cache issues a HTTP request to the origin to when the response is received.",
+      "description": "Average interval from when a cache issues an HTTP request to the origin to when the response is received. Total miss processing time divided by miss count, so it is time per miss rather than time per second.",
       "fieldConfig": {
         "defaults": {
-          "unit": "none",
+          "unit": "s",
           "color": {
             "mode": "thresholds"
           },
@@ -290,7 +290,7 @@
             "type": "prometheus",
             "uid": "prometheus-ds"
           },
-          "expr": "avg(rate(fastly_rt_miss_time_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate]))\n",
+          "expr": "sum(rate(fastly_rt_miss_time_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate])) / sum(rate(fastly_rt_miss_total{service_name=~\"$service_name\", service_id=~\"$service_id\", datacenter=~\"$datacenter\"}[$rate]))\n",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -680,7 +680,8 @@
       "description": "The amount of bandwidth served for you site by Fastly.",
       "fieldConfig": {
         "defaults": {
-          "unit": "bps"
+          "unit": "bps",
+          "decimals": 1
         },
         "overrides": []
       },
