@@ -855,7 +855,7 @@
         "datasource": "prometheus-ds",
         "definition": "",
         "includeAll": true,
-        "label": "Datacenter",
+        "label": "POP",
         "multi": true,
         "name": "datacenter",
         "options": [],

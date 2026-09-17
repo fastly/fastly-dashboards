@@ -8,7 +8,7 @@ This repository contains a [Docker Compose][compose] setup that deploys a full m
 
 - **Turnkey Setup:** Launch a complete Fastly monitoring stack with a single command
 - **Comprehensive Dashboards:** Visualize real-time and historical metrics with a rich set of pre-built Grafana dashboards
-- **Alerting:** 21 pre-configured Prometheus alerts covering error rates and latency at account, datacenter, origin, and service scope
+- **Alerting:** 21 pre-configured Prometheus alerts covering error rates and latency at account, POP, origin, and service scope
 - **Slack Integration:** Receive timely alerts directly in your Slack workspace
 - **Customizable:** Easily extend the dashboards and alerting rules to fit your specific needs
 
@@ -22,7 +22,7 @@ The following Grafana dashboards are provisioned automatically:
 - **Fastly Security:** Security-related metrics, including WAF and TLS data
 - **Fastly Thresholds:** Monitor against defined thresholds
 - **Top Services:** Summary of your most active services
-- **Top Datacenters:** A breakdown of your traffic by Fastly datacenter
+- **Top POPs:** A breakdown of your traffic by Fastly POP
 - **Top Origins:** A summary of your most active origin servers
 - **Top Domains:** A summary of your most active domains, from Domain Inspector
 
@@ -30,13 +30,29 @@ Top Domains needs your account to be entitled to [Domain Inspector](https://docs
 
 ### Screenshots
 
-Per-origin ranking with a service and datacenter filter, from **Fastly Top Origins**:
+Account-wide cache, traffic and bandwidth, with request rate per POP, from **Fastly Dashboard**:
 
-![Fastly Top Origins, ranking origins by requests, bandwidth, 4xx, 5xx and p99 latency](docs/images/fastly-top-origins.png)
+![Fastly Dashboard, showing hits, misses, hit ratio, requests, errors, request rate per POP, bandwidth and an origin latency heatmap](docs/images/fastly-dashboard.png)
+
+One service in detail, with its cache and shielding breakdown, from **Fastly Service**:
+
+![Fastly Service, showing status code ratios, p99 latency, hit ratio, hits, misses, passes, shielding, bandwidth, request handling and origin latency for a single service](docs/images/fastly-service.png)
 
 Request volume, execution time and guest errors for Compute services, from **Fastly Compute**:
 
 ![Fastly Compute, showing status code ratios, average execution time, resource usage and resource limits](docs/images/fastly-compute.png)
+
+Traffic and errors split by Fastly POP, from **Fastly Top POPs**:
+
+![Fastly Top POPs, comparing three POPs by requests, bandwidth, p99 origin latency, errors, 4xx and 5xx](docs/images/fastly-top-pops.png)
+
+Per-origin ranking with a service and POP filter, from **Fastly Top Origins**:
+
+![Fastly Top Origins, ranking origins by requests, bandwidth, 4xx, 5xx and p99 latency](docs/images/fastly-top-origins.png)
+
+Per-domain requests, bandwidth and edge hit ratio, from **Fastly Top Domains**:
+
+![Fastly Top Domains, showing domains with traffic, requests per second, bandwidth, edge hit ratio, and edge hit ratio broken down by POP](docs/images/fastly-top-domains.png)
 
 The figures in these screenshots come from synthetic data, not a real Fastly account.
 
@@ -47,14 +63,16 @@ The stack includes 21 pre-configured Prometheus alerting rules that are sent to 
 | Scope      | Rule file        | Alerts                                                      |
 | :--------- | :--------------- | :---------------------------------------------------------- |
 | Account    | `account.yml`    | 4xx ratio, 5xx ratio, error ratio, p50 latency, p99 latency |
-| Datacenter | `datacenter.yml` | the same five, per Fastly POP                               |
+| POP        | `datacenter.yml` | the same five, per Fastly POP                               |
 | Origin     | `origin.yml`     | the same five, per origin                                   |
 | Service    | `service.yml`    | the same five, per service                                  |
 | Demo       | `demo.yml`       | one example alert                                           |
 
 Each alert uses a hold-down timer and hysteresis so it does not flap, and fires only once the scope it watches passes a minimum level of traffic.
 
-The remaining rule files define recording rules and no alerts: `cache.yml`, `compute.yml`, `errors.yml`, `latency.yml`, `security.yml`, `thresholds.yml`, and `traffic.yml`. They feed the dashboards, and give you ratios to build your own alerts on.
+The remaining rule files define recording rules and no alerts: `cache.yml`, `compute.yml`, `domain.yml`, `errors.yml`, `latency.yml`, `security.yml`, `thresholds.yml`, and `traffic.yml`. They feed the dashboards, and give you ratios to build your own alerts on.
+
+The rule and metric names keep the word `datacenter`, as in `fastly_datacenter:4xx_ratio`, because that is the label the exporter emits. POP and datacenter mean the same thing here.
 
 You can customize and add your own rules in the [`prometheus/rules/`](prometheus/rules/) directory.
 

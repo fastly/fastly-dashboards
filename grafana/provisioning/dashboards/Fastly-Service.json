@@ -889,7 +889,7 @@
         "dataLinks": [
           {
             "targetBlank": true,
-            "title": "Service Datacenter View",
+            "title": "Service POP View",
             "url": "/d/nwscINyZk/fastly-service?var-datacenter=${__field.labels.datacenter}&${__all_variables}"
           }
         ],
@@ -1630,7 +1630,7 @@
               "refId": "A"
             }
           ],
-          "title": "REQUESTS per DATACENTER",
+          "title": "REQUESTS per POP",
           "type": "timeseries"
         },
         {
@@ -1677,7 +1677,7 @@
               "refId": "A"
             }
           ],
-          "title": "5XX per REQUEST by DATACENTER",
+          "title": "5XX per REQUEST by POP",
           "transparent": true,
           "type": "timeseries"
         }
@@ -1743,7 +1743,7 @@
         "datasource": "prometheus-ds",
         "definition": "label_values(fastly_rt_requests_total, datacenter)",
         "includeAll": true,
-        "label": "Datacenter",
+        "label": "POP",
         "multi": true,
         "name": "datacenter",
         "options": [],
