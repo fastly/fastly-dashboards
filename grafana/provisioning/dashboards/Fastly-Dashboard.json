@@ -338,7 +338,10 @@
         "y": 3
       },
       "id": 12,
-      "options": {},
+      "options": {
+        "content": "I think I can get this, but it's going to require a feature addition to fastly-exporter",
+        "mode": "markdown"
+      },
       "title": "GLOBAL POP TRAFFIC",
       "type": "text"
     },
@@ -604,7 +607,47 @@
       ],
       "title": "ORIGIN LATENCY",
       "transparent": true,
-      "type": "heatmap"
+      "type": "heatmap",
+      "cards": {
+        "cardPadding": null,
+        "cardRound": null
+      },
+      "color": {
+        "cardColor": "#e24d42",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateRdYlGn",
+        "exponent": 0.6,
+        "mode": "opacity"
+      },
+      "dataFormat": "tsbuckets",
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "reverseYBuckets": false,
+      "xAxis": {
+        "show": true
+      },
+      "xBucketNumber": null,
+      "xBucketSize": null,
+      "yAxis": {
+        "decimals": null,
+        "format": "short",
+        "logBase": 1,
+        "max": null,
+        "min": null,
+        "show": true,
+        "splitFactor": null
+      },
+      "yBucketBound": "auto",
+      "yBucketNumber": null,
+      "yBucketSize": null,
+      "tooltip": {
+        "show": true,
+        "showHistogram": true
+      },
+      "legend": {
+        "show": true
+      }
     }
   ],
   "preload": false,
